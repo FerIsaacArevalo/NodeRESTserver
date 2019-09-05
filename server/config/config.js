@@ -1,6 +1,8 @@
 //Nota Previa: <process.env.port> y <process.env.node_env> no existen de manera local 
 //             cuando la aplicacion es subida a heroku, este crea esas variables en el environment.
 
+//Nota2: <proces.env.STRING_CONNECT> fue creada por nosotros como una varible de producción de heroku (tutorial Git.txt)
+
 //////////////////////////////////7
 // PUERTO
 process.env.PORT = process.env.PORT || 3000;
@@ -15,7 +17,7 @@ let urlConnect;
 if (process.env.NODE_ENV === 'dev') {
     urlConnect = 'mongodb://localhost:27017/cafe';
 } else {
-    urlConnect = 'mongodb+srv://FernandoAdmin:N13WO4XWtE6EDmIY@cluster0-u2fzf.mongodb.net/cafe';
+    urlConnect = process.env.STRING_CONNECT;
 }
 //////////////////////////////////////
 
