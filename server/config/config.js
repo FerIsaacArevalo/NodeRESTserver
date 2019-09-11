@@ -11,6 +11,11 @@ process.env.PORT = process.env.PORT || 3000;
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
     ////////////////////////////////////
 
+
+//CLIENTE ID DE GOOGLE ///////////////
+process.env.CLIENT_ID = process.env.CLIENT_ID || '624549850960-us1hqumoee6tfg1bi773f32pk066je99.apps.googleusercontent.com'
+    ////////////////////////////////////
+
 //VARIABLES TOKENS 
 
 process.env.TOKEN_VENDATE = process.env.TOKEN_VENDATE || '30d';
