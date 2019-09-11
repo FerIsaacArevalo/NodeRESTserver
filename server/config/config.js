@@ -11,6 +11,14 @@ process.env.PORT = process.env.PORT || 3000;
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
     ////////////////////////////////////
 
+//VARIABLES TOKENS 
+
+process.env.TOKEN_VENDATE = process.env.TOKEN_VENDATE || '30d';
+
+process.env.SEED = process.env.SEED || 'super-clave-secreta-desarrollo';
+
+
+
 //CADENA DE CONEXIÓN ////////////////
 
 let urlConnect;

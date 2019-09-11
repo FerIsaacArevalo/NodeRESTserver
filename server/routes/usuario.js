@@ -4,21 +4,24 @@ const app = express();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
 const _ = require('underscore');
+const { autentication, autenticationRole } = require('../middlewares/autentication');
+
 
 let salt = bcrypt.genSaltSync(10);
+
 
 app.get('/', function(req, res) {
     res.json('La aplicacion esta corriendo')
 })
 
-app.get('/usuario', function(req, res) {
+app.get('/usuario', autentication, function(req, res) {
 
     let solicitados = req.query.solicitados || 5;
     solicitados = Number(solicitados);
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
-    Usuario.find({ estado: true }, 'nombre email')
+    Usuario.find({ estado: true }, 'nombre email role')
         .skip(desde)
         .limit(solicitados)
         .exec((err, usuarios) => {
@@ -43,7 +46,7 @@ app.get('/usuario', function(req, res) {
         })
 })
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [autentication, autenticationRole], function(req, res) {
 
     let body = req.body;
 
@@ -63,11 +66,11 @@ app.post('/usuario', function(req, res) {
             })
         } else {
 
-            let salida = _.omit(usuarioDB.toObject(), 'password');
 
 
             res.json({
-                Usuario: salida
+                OK: true,
+                usuarioDB
             })
         }
     })
@@ -75,7 +78,7 @@ app.post('/usuario', function(req, res) {
 
 })
 
-app.put('/usuario/:poto', function(req, res) {
+app.put('/usuario/:poto', autentication, function(req, res) {
 
     let id = req.params.poto;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -90,10 +93,10 @@ app.put('/usuario/:poto', function(req, res) {
         }
 
 
-        let user = _.omit(UsuarioDB.toObject(), "password");
+
         res.json({
             OK: true,
-            Usuario: user
+            UsuarioDB
         })
 
     })
@@ -101,7 +104,8 @@ app.put('/usuario/:poto', function(req, res) {
 
 })
 
-app.delete('/usuario/:id', function(req, res) {
+//METODO QUE SOLO CAMBIA EL ESTADO DEL USUARIO EN LA BASE DE DATOS
+app.delete('/usuario/:id', [autentication, autenticationRole], function(req, res) {
 
     let id = req.params.id;
     let body = { estado: false };
@@ -116,17 +120,17 @@ app.delete('/usuario/:id', function(req, res) {
         }
 
 
-        let user = _.omit(UsuarioDB.toObject(), "password");
+
         res.json({
             OK: true,
-            Usuario: user
+            UsuarioDB
         })
 
     })
 })
 
 
-
+//METODO PARA BORRAR FISICAMENTE AL USUARIO DE LA BASE DE DATOS
 // app.delete('/usuario/:id', function(req, res) {
 
 //     let id = req.params.id;

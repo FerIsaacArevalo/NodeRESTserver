@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
-
+const _ = require('underscore');
 
 let Schema = mongoose.Schema;
 
@@ -47,6 +47,10 @@ let usuarioSchema = new Schema({
 });
 usuarioSchema.plugin(uniqueValidator, { message: '{PATH} debe ser único' });
 
+// Metodo para ocultar la password
+usuarioSchema.methods.toJSON = function() {
+    return _.omit(this.toObject(), 'password')
+};
 
 
 
