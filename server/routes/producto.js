@@ -158,7 +158,11 @@ app.put('/producto/:id', (req, res) => {
     let id = req.params.id;
 
     let body = _.pick(req.body, ['nombre', 'precio', 'descripcion', 'categoria']);
-    body.precioUni = body.precio;
+
+    if (body.precio) {
+        body.precioUni = body.precio;
+    }
+
     Producto.findOneAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, productoDB) => {
 
         if (err) {
