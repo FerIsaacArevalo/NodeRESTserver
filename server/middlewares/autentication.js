@@ -15,6 +15,7 @@ let autentication = (req, res, next) => {
         };
 
         req.usuario = decoded.usuario;
+
         next();
 
 

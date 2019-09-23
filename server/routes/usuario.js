@@ -9,11 +9,6 @@ const { autentication, autenticationRole } = require('../middlewares/autenticati
 
 let salt = bcrypt.genSaltSync(10);
 
-
-app.get('/', function(req, res) {
-    res.json('La aplicacion esta corriendo')
-})
-
 app.get('/usuario', autentication, function(req, res) {
 
     let solicitados = req.query.solicitados || 5;
